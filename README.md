@@ -1,6 +1,6 @@
 # ghana-bank-validation-demo
 Smart bank transfer form with dynamic validation for all licensed Ghanaian banks.
-# 🇬🇭 Ghana Bank Validation Demo
+# Ghana Bank Validation Demo
 
 ## 🔍 Overview
 This smart bank transfer form dynamically validates account numbers based on the selected bank. It reflects real-world formats used by licensed Ghanaian banks.
