@@ -15,7 +15,7 @@ This smart bank transfer form dynamically validates account numbers based on the
 Includes all licensed commercial banks in Ghana (as listed by the Bank of Ghana).
 
 ## 🚀 Live Demo
-[View the demo]
+[View the demo] https://samuel-cell-debug.github.io/ghana-bank-validation-demo/
 
 ## 👤 Author
 Samuel Graham Wilberforce  
