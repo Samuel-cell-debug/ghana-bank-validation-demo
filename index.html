@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Bank Transfer – Ghana Edition</title>
+  <style>
+    body { font-family: Arial; margin: 40px; max-width: 700px; }
+    label { font-weight: bold; }
+    input, select {
+      padding: 8px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .error { color: red; font-weight: bold; }
+    .valid { color: green; font-weight: bold; }
+    .spinner {
+      display: none;
+      margin: 10px 0;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #0077cc;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <h2>Smart Bank Transfer Form – Ghana Edition</h2>
+  <form id="transferForm">
+    <label for="bank">Select Bank:</label>
+    <select id="bank" onchange="updateValidationRules()">
+      <option value="">--Choose Bank--</option>
+      <option value="absa">Absa Bank Ghana</option>
+      <option value="access">Access Bank Ghana</option>
+      <option value="adb">Agricultural Development Bank</option>
+      <option value="boa">Bank of Africa Ghana</option>
+      <option value="calbank">CalBank</option>
+      <option value="cbg">Consolidated Bank Ghana</option>
+      <option value="ecobank">Ecobank Ghana</option>
+      <option value="fbn">FBNBank Ghana</option>
+      <option value="fidelity">Fidelity Bank Ghana</option>
+      <option value="atlantic">First Atlantic Bank</option>
+      <option value="fnb">First National Bank Ghana</option>
+      <option value="gcb">GCB Bank</option>
+      <option value="gtbank">Guaranty Trust Bank Ghana</option>
+      <option value="nib">National Investment Bank</option>
+      <option value="omnibsic">OmniBSIC Bank Ghana</option>
+      <option value="prudential">Prudential Bank</option>
+      <option value="republic">Republic Bank Ghana</option>
+      <option value="societe">Société Générale Ghana</option>
+      <option value="stanbic">Stanbic Bank Ghana</option>
+      <option value="stanchart">Standard Chartered Bank Ghana</option>
+      <option value="uba">United Bank for Africa Ghana</option>
+      <option value="umb">Universal Merchant Bank</option>
+      <option value="zenith">Zenith Bank Ghana</option>
+    </select>
+
+    <label for="account">Account Number:</label>
+    <input type="text" id="account" required>
+    <span id="feedbackMsg"></span>
+    <div class="spinner" id="spinner"></div>
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    const validationRules = {
+      absa: 10, access: 10, adb: 10, boa: 10, calbank: 10, cbg: 10,
+      ecobank: 10, fbn: 10, fidelity: 10, atlantic: 10, fnb: 10, gcb: 10,
+      gtbank: 10, nib: 10, omnibsic: 10, prudential: 10, republic: 10,
+      societe: 10, stanbic: 10, stanchart: 10, uba: 10, umb: 10, zenith: 10
+    };
+
+    let currentLength = null;
+
+    function updateValidationRules() {
+      const bank = document.getElementById("bank").value;
+      currentLength = validationRules[bank] || null;
+      document.getElementById("feedbackMsg").textContent = "";
+      document.getElementById("feedbackMsg").className = "";
+    }
+
+    document.getElementById("transferForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const bank = document.getElementById("bank").value;
+      const account = document.getElementById("account").value.trim();
+      const feedback = document.getElementById("feedbackMsg");
+      const spinner = document.getElementById("spinner");
+
+      if (!currentLength) {
+        feedback.textContent = "⚠️ Please select a bank.";
+        feedback.className = "error";
+        return;
+      }
+
+      if (!new RegExp(`^\\d{${currentLength}}$`).test(account)) {
+        feedback.textContent = `❌ Account number must be exactly ${currentLength} digits for ${document.getElementById("bank").selectedOptions[0].text}.`;
+        feedback.className = "error";
+        return;
+      }
+
+      spinner.style.display = "inline-block";
+      feedback.textContent = "";
+      feedback.className = "";
+
+      setTimeout(() => {
+        spinner.style.display = "none";
+        feedback.textContent = "✅ Transaction validated successfully.";
+        feedback.className = "valid";
+
+        console.log(`Validated submission → Bank: ${bank}, Account: ${account}`);
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
